@@ -34,7 +34,6 @@ def place_order_pessimistic(data: OrderCreate, db: Session = Depends(get_db)):
     try:
         # Step 3: Acquire row-level lock using FOR UPDATE
         product = db.query(Product).with_for_update().filter(Product.id == data.productId).first()
-        time.sleep(2) # have to be removed
         if not product:
             raise HTTPException(status_code=404, detail="Product not found")
         
